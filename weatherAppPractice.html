@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.2/cerulean/bootstrap.min.css" integrity="sha512-EKyrNi3+szgGslyi2kYzcYLwnBSt4XrnamWGiclaRkqsriEl+e4EmyNFAN/LoVXV8ESLxAQ7/cFfrX4rML0h2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .container {
+            height:500px;
+            width:300px;
+            background-color: blueviolet;
+          
+            background-image: url('./IMG.JPG.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+             justify-content: center;
+            align-items: center;
+            color:white;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            color:white;
+        }
+
+    
+        #cityName {
+            color:white;
+            text-align: center;
+            display:flex;
+            flex-direction: column-reverse;
+            justify-content: end;
+            align-items: center;
+            /* background-color: aqua; */
+            padding-top:40px;
+            font-size: 1.4em;
+            
+
+        }
+        #temp {
+            color:white;
+            font-size: 1.8em;
+        }
+        h4 {
+            color:white;
+        }
+        .fa-thunderstorm {
+            font-size: 20px;
+
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <!-- <h1>Weather App</h1> -->
+<!-- 
+    <label for="city">Enter City:</label>
+    <input type="text" id="city" name="city" required>
+    <button onclick="getWeather()">Get Weather</button> -->
+
+
+
+    <div class="container">
+    <h2> <span id="cityName"> </span></h2>
+     <h2> <span id="temp"></span></h2>
+     <h4>H <span id="tempMin"></span> L
+     <span id="tempMax"></span></h4>
+
+     <div id="forecast"></div>
+     <div id="weather-container"></div>
+     <div> <i class="fas fa-thunderstorm"></i>
+ </div>
+   </div>
+    <script>
+
+     const apiKey = "fa650091e098f1c98d516fc1f87e810f"; 
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=rajkot&appid=fa650091e098f1c98d516fc1f87e810f&units=metric";
+    // const forecastUrl = "https//pro.openweathermap.org/data/2.5/climate/forecast?q=rajkot&+91&appid=fa650091e098f1c98d516fc1f87e810f";
+
+
+   
+           
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    document.querySelector("#cityName").innerHTML = data.name;
+                      document.querySelector('#temp').innerHTML = data.main.temp;
+                      document.querySelector('#tempMin').innerHTML = data.main.temp_min;
+                      document.querySelector('#tempMax').innerHTML = data.main.temp_max;
+                })
+
+            // fetch(forecastUrl)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         const forecastDiv = document.getElementById('forecast');
+            //         forecastDiv.innerHTML = '<h2>Weather Forecast for the Week</h2>';
+
+                    // // Display forecast for each day
+                    // for (let i = 0; i < data.list.length; i += 8) {
+                    //     const dayData = data.list[i];
+                    //     const date = new Date(dayData.dt * 1000);
+                    //     const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+                    //     const temperature = dayData.main.temp;
+                    //     const description = dayData.weather[0].description;
+
+                    //     const dayElement = document.createElement('div');
+                    //     dayElement.classList.add('day');
+                    //     dayElement.innerHTML = `<p>${dayOfWeek}</p>
+                    //                             <p>Temperature: ${temperature} K</p>
+                    //                             <p>Description: ${description}</p>`;
+
+                    //     forecastDiv.appendChild(dayElement);
+                    // }})
+             
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    const weatherContainer = document.getElementById('weather-container');
+                    weatherContainer.innerHTML = '<p>Error fetching weather data. Please try again.</p>';
+                });
+        
+    </script>
+
+</body>
+</html>
